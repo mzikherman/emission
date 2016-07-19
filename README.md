@@ -7,14 +7,15 @@
 
 ### Installation
 
-1. Install Node.js and type checking tool: `$ brew install node flow`
-2. Install file watcher used by React Native:
+1. Clone this repo, with submodules: `$ git clone --recursive https://github.com/artsy/emission.git`
+2. Install Node.js and type checking tool: `$ brew install node flow`
+3. Install file watcher used by React Native:
    * `$ brew install pcre`
    * `$ brew link pcre`
    * `$ brew install watchman --HEAD`
-3. Install NPM modules: `$ npm install`
-4. Install Pods: `$ cd Example && pod install`
-5. Configure secrets:
+4. Install NPM modules: `$ npm install`
+5. Install Pods: `$ cd Example && pod install`
+6. Configure secrets:
    * Copy configuration file: `$ cd Example/Emission && cp Configuration.h.sample Configuration.h`
    * Edit the configuration file as per the instructions inside.
 
@@ -28,6 +29,7 @@
 
 3. We vendor some data from other repositories that you will sometimes need to update. You can either update all of them
    with `$ npm run sync-externals` or individually:
+   * To run these, you will need to have babel-cli installed: `$ npm install -g babel-cli`
    * The GraphQL schema of metaphysics that Relay uses to generate queries from: `$ npm run sync-schema`
    * The colors defined in Artsy’s style-guide: `$ npm run sync-colors`
 
