@@ -33,6 +33,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>CodePushDeploymentKey</key>
+	<string>o1BTGLR6lSKoC1lbPEjS-vBVAqusNJLRP4K5b</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

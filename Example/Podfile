@@ -2,7 +2,7 @@ source 'https://github.com/artsy/Specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
 react_path = '../node_modules/react-native'
-
+code_push_path  = '../node_modules/react-native-code-push'
 target 'Emission' do
   pod 'Emission', :path => '../'
   # TODO: Push a release to our spec repo.
@@ -15,6 +15,7 @@ target 'Emission' do
   end
 
   pod 'React', :path => react_path, :subspecs => ['RCTWebSocket', 'RCTImage']
+  pod 'CodePush', :path => code_push_path
 
   target 'EmissionTests' do
     inherit! :search_paths

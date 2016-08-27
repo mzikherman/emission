@@ -15,6 +15,8 @@
 #import <React/RCTUtils.h>
 #import <TargetConditionals.h>
 
+#import <CodePush/CodePush.h>
+
 #define ARTIST @"alex-katz"
 
 #if TARGET_OS_SIMULATOR
@@ -60,14 +62,16 @@ randomBOOL(void)
 
   AREmission *emission = nil;
 
-#ifdef ENABLE_DEV_MODE
-  NSURL *packagerURL = [NSURL URLWithString:@"http://localhost:8081/Example/Emission/index.ios.bundle?platform=ios&dev=true"];
+//#ifdef ENABLE_DEV_MODE
+//  NSURL *packagerURL = [NSURL URLWithString:@"http://localhost:8081/Example/Emission/index.ios.bundle?platform=ios&dev=true"];
+//  emission = [[AREmission alloc] initWithUserID:USER_ID authenticationToken:OAUTH_TOKEN packagerURL:packagerURL];
+//#else
+  NSBundle *emissionBundle = [NSBundle bundleForClass:AREmission.class];
+  NSURL *packagerURL = [CodePush bundleURLForResource:@"Emission" withExtension:@"js" subdirectory:nil bundle:emissionBundle];
   emission = [[AREmission alloc] initWithUserID:USER_ID authenticationToken:OAUTH_TOKEN packagerURL:packagerURL];
-#else
-  emission = [[AREmission alloc] initWithUserID:USER_ID authenticationToken:OAUTH_TOKEN];
-#endif
-  [AREmission setSharedInstance:emission];
+//#endif
 
+  [AREmission setSharedInstance:emission];
 
   emission.APIModule.artistFollowStatusProvider = ^(NSString *artistID, RCTResponseSenderBlock block) {
     NSNumber *following = @(randomBOOL());
