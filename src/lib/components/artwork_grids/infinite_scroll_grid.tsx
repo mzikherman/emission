@@ -21,8 +21,9 @@ import {
 import Spinner from "../spinner"
 import Artwork from "./artwork"
 
-import { ArtistRelayProps } from "./relay_connections/artist_artworks_grid"
-import { GeneRelayProps } from "./relay_connections/gene_artworks_grid"
+// import { ArtistRelayProps } from "./relay_connections/artist_artworks_grid"
+// import { GeneRelayProps } from "./relay_connections/gene_artworks_grid"
+// import { SavedArtworksRelayProps } from "./relay_connections/saved_artworks_grid"
 
 export const PageSize = 10
 export const PageEndThreshold = 1000
@@ -43,7 +44,9 @@ type Artworks = Array<{
   } | null,
 }>
 
-interface Props extends ArtistRelayProps, GeneRelayProps {
+// interface Props extends ArtistRelayProps, GeneRelayProps, SavedArtworksRelayProps {
+interface Props {
+
   /** The direction for the grid, currently only 'column' is supported . */
   sectionDirection: string;
 
@@ -55,15 +58,6 @@ interface Props extends ArtistRelayProps, GeneRelayProps {
 
   /** The per-item margin */
   itemMargin: number;
-
-  /** The artist in question */
-  artist: any;
-
-  /** The gene in question */
-  gene: any;
-
-  /** The key to get artworks */
-  queryKey: any;
 
   /** Filter for artist artworks */
   filter: any;
@@ -79,6 +73,12 @@ interface Props extends ArtistRelayProps, GeneRelayProps {
 
   /** Relay */
   relay: any;
+
+  /** Relay */
+  artworks_connection: any
+
+  /** Not Relay */
+  artworks: Artworks | null
 
   /** A callback that is called once all artworks have been queried. */
   onComplete?: () => void;
@@ -102,6 +102,7 @@ class InfiniteScrollArtworksGrid extends React.Component<Props, State> {
 
   constructor(props) {
     super(props)
+    console.log(props)
 
     this.state = {
       sectionDimension: 0,
@@ -122,7 +123,7 @@ class InfiniteScrollArtworksGrid extends React.Component<Props, State> {
     }, (readyState) => {
       if (readyState.done) {
         this.setState({ fetchingNextPage: false })
-        if (!this.props[this.props.queryKey].artworks.pageInfo.hasNextPage && this.props.onComplete) {
+        if (!this.props.artworks_connection.pageInfo.hasNextPage && this.props.onComplete) {
           this.props.onComplete()
           this.setState({ completed: true })
         }
@@ -163,9 +164,8 @@ class InfiniteScrollArtworksGrid extends React.Component<Props, State> {
   sectionedArtworks() {
     const sectionedArtworks: Artworks[] = []
     const sectionRatioSums: number[] = []
-    const queryKey = this.props.queryKey
-    const artworks: Artworks = this.props[queryKey].artworks ?
-      this.props[queryKey].artworks.edges.map(({ node }) => node) : []
+    const artworks: Artworks = this.props.artworks ?
+      this.props.artworks_connection.artworks.edges.map(({ node }) => node) : []
 
     for (let i = 0; i < this.props.sectionCount; i++) {
       sectionedArtworks.push([])
@@ -207,8 +207,7 @@ class InfiniteScrollArtworksGrid extends React.Component<Props, State> {
       height: this.props.itemMargin,
     }
 
-    const queryKey = this.props.queryKey
-    const artworks = this.props[queryKey].artworks ? this.props[queryKey].artworks.edges : []
+    const artworks = this.props.artworks ? this.props.artworks_connection.edges : []
     const sectionedArtworks = this.sectionedArtworks()
     const sections: JSX.Element[] = []
     for (let i = 0; i < this.props.sectionCount; i++) {

@@ -4,7 +4,12 @@ import Artwork from "../artwork"
 
 import InfiniteScrollArtworksGrid, {PageSize} from "../infinite_scroll_grid"
 
-export default Relay.createContainer(InfiniteScrollArtworksGrid, {
+const SavedArtworks: React.SFC<any> = props => {
+  console.log(props)
+  return <InfiniteScrollArtworksGrid artworks_connection={props.artist.artworks_connection}, ...props />
+}
+
+export default Relay.createContainer(SavedArtworks, {
   initialVariables: {
     totalSize: PageSize,
     filter: null,

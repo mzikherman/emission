@@ -82,10 +82,8 @@ class Artworks extends React.Component<Props, State> {
           <SerifText style={styles.text}>{title}</SerifText> <SerifText style={countStyles}>({count})</SerifText>
         </SerifText>
         <ArtworksGrid
-          artist={this.props.artist}
           filter={filter}
           onComplete={onComplete}
-          queryKey="artist"
         />
       </View>
     )

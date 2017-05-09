@@ -1600,8 +1600,37 @@ type FilterSaleArtworksCounts {
   ): FormattedNumber
 }
 
+type FollowArtist {
+  artist: Artist
+  auto: Boolean
+
+  # A globally unique ID.
+  __id: ID!
+
+  # A type-specific ID.
+  id: String!
+}
+
+# A connection to a list of items.
+type FollowArtistConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [FollowArtistEdge]
+}
+
 type FollowArtistCounts {
   artists: Int
+}
+
+# An edge in a connection.
+type FollowArtistEdge {
+  # The item at the end of the edge
+  node: FollowArtist
+
+  # A cursor for use in pagination
+  cursor: String!
 }
 
 type FollowArtists {
@@ -2432,6 +2461,9 @@ type Me implements Node {
   # A list of the current user’s artist follows
   follow_artists(page: Int, size: Int): FollowArtists
 
+  # A list of the current user’s inquiry requests
+  followed_artists_connection(after: String, first: Int, before: String, last: Int): FollowArtistConnection
+
   # The current user's status relating to bids on artworks
   lot_standing(artwork_id: String!, sale_id: String!): LotStanding
 
@@ -2466,6 +2498,7 @@ type Me implements Node {
     size: Int
     sort: SaleSorts
   ): [SaleRegistration]
+  saved_artworks: Collection
 
   # A list of the current user’s suggested artists, based on a single artist
   suggested_artists(

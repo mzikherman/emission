@@ -12,6 +12,7 @@ import {
 
 import Headline from "../components/text/headline"
 
+import Artworks from "../components/artwork_grids/relay_connections/saved_artworks_grid"
 import { SwitchEvent } from "../components/switch_view"
 import TabView from "../components/tab_view"
 
@@ -32,6 +33,7 @@ export class MyProfile extends React.Component<Props, {}> {
       <ScrollView scrollsToTop={true} automaticallyAdjustContentInsets={false}>
         <View style={{ paddingLeft: commonPadding, paddingRight: commonPadding }}>
           <Headline>{this.props.me.name}</Headline>
+          <Artworks queryKey="me" me={this.props.me}/>
         </View>
       </ScrollView>
     )
@@ -56,7 +58,9 @@ export default Relay.createContainer(MyProfile, {
     me: () => Relay.QL`
       fragment on Me {
         name
+        ${Artworks.getFragment("artworks")}
       }
+
     `,
   },
 })

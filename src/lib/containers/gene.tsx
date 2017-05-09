@@ -119,7 +119,6 @@ export class Gene extends React.Component<Props, State> {
         medium={this.state.selectedMedium}
         priceRange={this.state.selectedPriceRange}
         sort={this.state.sort}
-        queryKey="gene"
       />
     }
   }

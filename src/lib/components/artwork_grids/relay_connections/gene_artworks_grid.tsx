@@ -1,8 +1,15 @@
+import * as React from "react"
 import * as Relay from "react-relay"
+
 import Artwork from "../artwork"
 import InfiniteScrollArtworksGrid, {PageSize} from "../infinite_scroll_grid"
 
-export default Relay.createContainer(InfiniteScrollArtworksGrid, {
+const SavedArtworks: React.SFC<any> = props => {
+  console.log("GeneMapper:", props)
+  return <InfiniteScrollArtworksGrid artworks_connection={props.gene.artworks}, relay={props.relay}, ...props/>
+}
+
+export default Relay.createContainer(SavedArtworks, {
   initialVariables: {
     totalSize: PageSize,
     medium: "*",
