@@ -4,9 +4,10 @@ import * as Relay from "react-relay"
 import Artwork from "../artwork"
 import InfiniteScrollArtworksGrid, {PageSize} from "../infinite_scroll_grid"
 
-const SavedArtworks: React.SFC<any> = props => (
-  <InfiniteScrollArtworksGrid relay={props.relay} artworks_connection={props.artworks.saved_artworks}, ...props/>
-)
+const SavedArtworks: React.SFC<any> = props => {
+  console.log(props)
+  return <InfiniteScrollArtworksGrid queryKey="me" artworks={[]}, relay: {props.relay}, ...props />
+}
 
 export default Relay.createContainer(SavedArtworks, {
   initialVariables: {

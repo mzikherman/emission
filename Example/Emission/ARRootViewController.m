@@ -57,6 +57,7 @@
   [sectionData addCellData:self.jumpToGene];
   [sectionData addCellData:self.jumpToRefinedGene];
   [sectionData addCellData:self.jumpToWorksForYou];
+  [sectionData addCellData:self.jumpToMyProfile];
 
   return sectionData;
 }
@@ -143,6 +144,14 @@
 {
   return [self tappableCellDataWithTitle:@"Works For You" selection:^{
     id viewController = [[ARWorksForYouComponentViewController alloc] initWithSelectedArtist:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+  }];
+}
+
+- (ARCellData *)jumpToMyProfile
+{
+  return [self tappableCellDataWithTitle:@"My Profile" selection:^{
+    id viewController = [[ARComponentViewController alloc] initWithEmission:nil moduleName:@"MyProfile" initialProperties:@{}];
     [self.navigationController pushViewController:viewController animated:YES];
   }];
 }

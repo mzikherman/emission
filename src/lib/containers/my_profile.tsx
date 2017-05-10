@@ -60,7 +60,6 @@ export default Relay.createContainer(MyProfile, {
         name
         ${Artworks.getFragment("artworks")}
       }
-
     `,
   },
 })
