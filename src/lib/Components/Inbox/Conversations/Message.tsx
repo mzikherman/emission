@@ -99,8 +99,11 @@ export class Message extends React.Component<Props, any> {
   renderBody() {
     const { message, firstMessage, initialText } = this.props
     const isSent = !!message.created_at
+    let body = firstMessage ? initialText : message.body
 
-    const body = firstMessage ? initialText : message.body
+    // TODO: When we save purchase request initial text properly, this hack can be removed.
+    const parts = body.split("Message from " + message.from.name + ":\n\n")
+    body = parts[parts.length - 1]
     return (
       <BodyText disabled={!isSent}>
         {body}
